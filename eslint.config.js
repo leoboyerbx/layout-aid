@@ -1,4 +1,5 @@
 import antfu from '@antfu/eslint-config'
+
 export default antfu(
     {
         type: 'lib',
@@ -10,5 +11,5 @@ export default antfu(
             'unused-imports/no-unused-vars': 'off',
             'style/indent': ['error', 4],
         },
-    }
+    },
 )
