@@ -2,7 +2,9 @@ import type { InferConfig } from '@layoutaid/shared'
 import type plugin from '.'
 
 declare global {
-    const config: InferConfig<typeof plugin>
+    const layoutAidConfig: {
+        columns: InferConfig<typeof plugin>
+    }
 }
 
 function setupDevtools(config: InferConfig<typeof plugin>): void {
@@ -72,18 +74,12 @@ function setupDevtools(config: InferConfig<typeof plugin>): void {
         }
     })
 
-    // hotkeys(config.shortcut, () => {
-    //     debugCols.classList.toggle('active')
-    //     if (config.persist) {
-    //         sessionStorage.setItem('debugColsActive', debugCols.classList.contains('active').toString())
-    //     }
-    // })
-
+    const hotKey = navigator.userAgent.includes('Mac OS X') ? '^' : '⇧'
     console.log(
-        `%c🛠️ Vite layout aid columns enabled. Use ${config.shortcut} for grid.%c`,
+        `%c🛠️ Vite layout aid columns enabled. Use ${hotKey}+g for grid.%c`,
         'background: #22b34b; color:white; padding: 6px 8px; border-radius: 4px;',
         '',
     )
 }
 
-setupDevtools(config)
+setupDevtools(layoutAidConfig.columns)

@@ -65,7 +65,7 @@ export function createPlugin<TConfig extends PluginConfig>(pluginName: string, c
                         return acc
                     }, {} as Record<string, any>)
 
-                    return `const config = ${JSON.stringify(configObject)};\n${code}`
+                    return `if (!window.layoutAidConfig) window.layoutAidConfig = {};\nwindow.layoutAidConfig["${pluginName}"] = ${JSON.stringify(configObject)};\n${code}`
                 }
             },
             transformIndexHtml(html) {
