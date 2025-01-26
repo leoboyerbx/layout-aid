@@ -1,7 +1,6 @@
 import { setupCounter } from './counter.ts'
 import typescriptLogo from './typescript.svg'
 import './style.css'
-import 'virtual:devtools-columns'
 import viteLogo from '/vite.svg'
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `

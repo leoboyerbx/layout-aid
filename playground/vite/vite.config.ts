@@ -8,6 +8,7 @@ export default defineConfig({
     plugins: [
         layoutaidColumns({
             count: 14,
+            prod: false,
         }),
     ],
 })

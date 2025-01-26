@@ -21,17 +21,15 @@ function setupDevtools(colsCount = 14): void {
     }
     .layoutaid-columns div {
         width: 100%;
-        border: solid 1px rgba(85, 189, 234, 0.3);
-        color: rgba(85, 189, 234, 0.3);
-        border-bottom: none;
-        border-top: none;
+        border-left: solid 1px /* __COLOR__ */;
+        color: /* __COLOR__ */;
         outline: none;
         pointer-events: none;
         display: flex;
         flex-direction: column;
         align-items: center;
         padding-top: 16px;
-        padding-bottom: -16px;
+        padding-bottom: 16px;
         justify-content: space-between;
         outline: none!important;
     }
@@ -75,4 +73,4 @@ function setupDevtools(colsCount = 14): void {
     )
 }
 
-setupDevtools(/* colsCount */)
+setupDevtools(/* __COLS_COUNT__ */)
