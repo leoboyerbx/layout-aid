@@ -1,14 +1,30 @@
+import type { BuildConfig } from 'unbuild'
+
+interface PluginBuildConfigOptions {
+    hasClient?: boolean
+    externals?: string[]
+}
+
 /**
  * @returns the common build config for all plugins
  */
-export function getPluginBuildConfig() {
+export function getPluginBuildConfig(config: PluginBuildConfigOptions = {}): BuildConfig {
+    const { hasClient = true } = config
+
+    const entries = ['src/index']
+    if (hasClient) {
+        entries.push('src/client')
+    }
+
     return {
-        entries: ['src/index', 'src/client'],
+        entries,
         clean: true,
         declaration: true,
-        externals: ['vite'],
+        externals: ['vite', 'unbuild', ...(config.externals || [])],
+        failOnWarn: false,
         rollup: {
             emitCJS: true,
+            inlineDependencies: true,
         },
     }
 }

@@ -1,4 +1,11 @@
-function setupDevtools(colsCount = 14): void {
+import type { InferConfig } from '@layoutaid/shared'
+import type plugin from '.'
+
+declare global {
+    const config: InferConfig<typeof plugin>
+}
+
+function setupDevtools(config: InferConfig<typeof plugin>): void {
     const styleToApply = /* css */`.layoutaid-columns {
         position: fixed;
         top: 0;
@@ -9,7 +16,7 @@ function setupDevtools(colsCount = 14): void {
         z-index: 10000;
         pointer-events: none;
         display: grid;
-        grid-template-columns: repeat(${colsCount}, minmax(0, 1fr));
+        grid-template-columns: repeat(${config.count}, minmax(0, 1fr));
         visibility: hidden;
         outline: none!important;
     }
@@ -21,8 +28,8 @@ function setupDevtools(colsCount = 14): void {
     }
     .layoutaid-columns div {
         width: 100%;
-        border-left: solid 1px /* __COLOR__ */;
-        color: /* __COLOR__ */;
+        border-left: solid 1px ${config.color};
+        color: ${config.color};
         outline: none;
         pointer-events: none;
         display: flex;
@@ -47,7 +54,7 @@ function setupDevtools(colsCount = 14): void {
     const debugCols = document.createElement('div')
     debugCols.classList.add('layoutaid-columns')
 
-    for (let i = 0; i < colsCount; i++) {
+    for (let i = 0; i < config.count; i++) {
         const el = document.createElement('div')
         el.innerHTML = `<span>${i + 1}</span><span>${i + 1}</span>`
         debugCols.appendChild(el)
@@ -55,7 +62,7 @@ function setupDevtools(colsCount = 14): void {
     document.body.appendChild(debugCols)
 
     // Persist debug cols active to sessionstorage
-    if (sessionStorage.getItem('debugColsActive') === 'true') {
+    if (config.persist && sessionStorage.getItem('debugColsActive') === 'true') {
         debugCols.classList.add('active')
     }
     document.addEventListener('keydown', (e) => {
@@ -65,12 +72,18 @@ function setupDevtools(colsCount = 14): void {
         }
     })
 
-    const hotKey = navigator.userAgent.includes('Mac OS X') ? '^' : '⇧'
+    // hotkeys(config.shortcut, () => {
+    //     debugCols.classList.toggle('active')
+    //     if (config.persist) {
+    //         sessionStorage.setItem('debugColsActive', debugCols.classList.contains('active').toString())
+    //     }
+    // })
+
     console.log(
-        `%c🛠️ Vite layout aid columns enabled. Use ${hotKey}+g for grid.%c`,
+        `%c🛠️ Vite layout aid columns enabled. Use ${config.shortcut} for grid.%c`,
         'background: #22b34b; color:white; padding: 6px 8px; border-radius: 4px;',
         '',
     )
 }
 
-setupDevtools(/* __COLS_COUNT__ */)
+setupDevtools(config)
