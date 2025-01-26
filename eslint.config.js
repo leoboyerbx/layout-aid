@@ -10,6 +10,7 @@ export default antfu(
             'node/prefer-global/process': 'off',
             'unused-imports/no-unused-vars': 'off',
             'style/indent': ['error', 4],
+            'ts/explicit-function-return-type': 'off',
         },
     },
 )
