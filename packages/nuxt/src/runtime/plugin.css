@@ -1,0 +1,6 @@
+#nuxt-devtools-container,
+#nuxt-devtools-container *,
+#nuxt-devtools-container *::before,
+#nuxt-devtools-container *::after {
+  outline: none !important;
+}

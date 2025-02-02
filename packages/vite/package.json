@@ -27,11 +27,11 @@
     "postinstall": "pnpm run build"
   },
   "dependencies": {
+    "@layoutaid/core": "workspace:^",
     "defu": "^6.1.4",
     "hotkeys-js": "^3.13.9"
   },
   "devDependencies": {
-    "@layoutaid/core": "workspace:^",
     "@types/node": "^22.10.10",
     "nodemon": "^3.1.7",
     "typescript": "^5.3.0",

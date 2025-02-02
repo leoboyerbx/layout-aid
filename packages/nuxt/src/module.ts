@@ -1,35 +1,29 @@
-import { addPlugin, createResolver, defineNuxtModule, extendViteConfig } from '@nuxt/kit'
-import OutlinePlugin from 'vite-plugin-layoutaid-outline'
+import type { LayoutaidConfig } from '@layoutaid/core'
+import { addPlugin, createResolver, defineNuxtModule, updateRuntimeConfig } from '@nuxt/kit'
 
-// Module options TypeScript interface definition
-type OutlinePluginOpton = Omit<NonNullable<Parameters<typeof OutlinePlugin>[0]>, 'inject'>
-export interface ModuleOptions {
-    outline: false | OutlinePluginOpton
-}
-
-export default defineNuxtModule<ModuleOptions>({
+export default defineNuxtModule<LayoutaidConfig & { prod: boolean }>({
     meta: {
         name: 'layout-aid',
         configKey: 'layoutAid',
     },
     // Default configuration options of the Nuxt module
     defaults: {
+        prod: false,
+        columns: {},
         outline: {},
     },
-    setup(_options, _nuxt) {
-        extendViteConfig((config) => {
-            if (_options.outline) {
-                config.plugins?.push(OutlinePlugin({ ..._options.outline, inject: true }))
-                console.log('OutlinePlugin added')
-            }
-        }, {
-            server: false,
-            client: true,
-            dev: true,
-            build: false,
-            prepend: true,
-        })
-        const resolver = createResolver(import.meta.url)
-        addPlugin(resolver.resolve('./runtime/plugin'))
+    setup(config, _nuxt) {
+        if (_nuxt.options.dev || config.prod) {
+            const resolver = createResolver(import.meta.url)
+            updateRuntimeConfig({
+                public: {
+                    layoutAidConfig: config,
+                },
+            })
+            addPlugin({
+                src: resolver.resolve('./runtime/plugin'),
+                mode: 'client',
+            })
+        }
     },
 })
