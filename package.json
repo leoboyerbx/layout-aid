@@ -1,15 +1,17 @@
 {
   "name": "layout-aid",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Dev tool that adds visual layout aid for integrating web pages",
+  "author": "leoboyerbx",
+  "license": "ISC",
+  "repository": "leoboyerbx/layout-aid",
+  "keywords": [],
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@antfu/eslint-config": "^4.1.0",
     "eslint": "^9.19.0"

@@ -1,10 +1,16 @@
 {
-  "name": "my-module",
+  "name": "@layoutaid/nuxt",
   "type": "module",
-  "version": "1.0.0",
-  "description": "My new Nuxt module",
+  "version": "0.0.1",
+  "description": "Nuxt module that adds visual layout aid for integrating web pages",
+  "author": "leoboyerbx",
   "license": "MIT",
-  "repository": "your-org/my-module",
+  "repository": "leoboyerbx/layout-aid",
+  "keywords": [
+    "nuxt",
+    "nuxt-module",
+    "layoutaid"
+  ],
   "exports": {
     ".": {
       "types": "./dist/types.d.ts",

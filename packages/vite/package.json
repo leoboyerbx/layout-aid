@@ -1,13 +1,15 @@
 {
   "name": "vite-plugin-layoutaid",
   "type": "module",
-  "version": "1.0.0",
-  "description": "",
-  "author": "",
+  "version": "workspace:*",
+  "description": "Vite plugin that adds visual layout aid for integrating web pages",
+  "author": "leoboyerbx",
   "license": "ISC",
   "keywords": [
     "vite",
-    "vite-plugin"
+    "vite-plugin",
+    "layoutaid",
+    "devtool"
   ],
   "exports": {
     ".": {
