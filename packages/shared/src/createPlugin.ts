@@ -6,6 +6,7 @@ export type PluginConfig = Record<string, string | number | boolean>
 // eslint-disable-next-line ts/consistent-type-definitions
 type CommonConfig = {
     prod?: boolean
+    inject?: boolean
     // Add other common config options here
 }
 
@@ -17,13 +18,14 @@ export function createPlugin<TConfig extends PluginConfig>(pluginName: string, c
     return function (pluginConfig: Partial<TConfig> & CommonConfig = {} as Partial<TConfig> & CommonConfig): Plugin {
         const {
             prod = false,
+            inject = true,
         } = pluginConfig
 
-        const hotVirtualModuleId = `virtual:layoutaid-${pluginName}.js`
+        const hotVirtualModuleId = `virtual:layoutaid-${pluginName}`
         const hotResolvedVirtualModuleId = `\0${hotVirtualModuleId}`
         let isDev = false
         function shouldInject(): boolean {
-            return isDev || prod
+            return inject && (isDev || prod)
         }
         let config: ResolvedConfig
         let mainEntry: string | undefined
@@ -44,7 +46,7 @@ export function createPlugin<TConfig extends PluginConfig>(pluginName: string, c
                 isDev = config.command === 'serve'
 
                 // Get the main entry point from index.html or config
-                if (config.build?.rollupOptions?.input) {
+                if (inject && config.build?.rollupOptions?.input) {
                     mainEntry = typeof config.build.rollupOptions.input === 'string'
                         ? config.build.rollupOptions.input
                         : Array.isArray(config.build.rollupOptions.input)
@@ -57,7 +59,10 @@ export function createPlugin<TConfig extends PluginConfig>(pluginName: string, c
                     return hotResolvedVirtualModuleId
                 }
             },
-            async load(id: string) {
+            async load(id: string, context) {
+                if (context?.ssr) {
+                    return null
+                }
                 if (id === hotResolvedVirtualModuleId) {
                     const code = await readFile(clientPath, 'utf-8')
                     const configObject = Object.entries(defaultConfig).reduce((acc, [key, defaultValue]) => {
@@ -69,7 +74,7 @@ export function createPlugin<TConfig extends PluginConfig>(pluginName: string, c
                 }
             },
             transformIndexHtml(html) {
-                if (!mainEntry) {
+                if (inject && !mainEntry) {
                     findMainEntry(html)
                 }
                 return html
@@ -91,15 +96,9 @@ export function createPlugin<TConfig extends PluginConfig>(pluginName: string, c
                     return null
                 }
 
-                // Create a config object with all the values
-                const configObject = Object.entries(defaultConfig).reduce((acc, [key, defaultValue]) => {
-                    acc[key] = pluginConfig[key] ?? defaultValue
-                    return acc
-                }, {} as Record<string, any>)
-
                 // Add config and import at the start of the file
                 return {
-                    code: `window.config = ${JSON.stringify(configObject)};\nimport '${hotVirtualModuleId}';\n${code}`,
+                    code: `import '${hotVirtualModuleId}';\n${code}`,
                     map: null,
                 }
             },
