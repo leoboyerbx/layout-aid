@@ -17,7 +17,7 @@ export interface ColumnsConfig {
 }
 
 export function columns(config: ColumnsConfig): void {
-    const { count = 14, color = 'rgba(85, 189, 234, 0.6)', persist = false } = config
+    const { count = 14, color = 'rgba(85, 189, 234, 0.6)', persist = true } = config
     const styleToApply = /* css */`.layoutaid-columns {
         position: fixed;
         top: 0;
