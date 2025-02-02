@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     layoutAid: {
         columns: {
             count: 14,
+            persist: true,
         },
         outline: {
             color: 'red',

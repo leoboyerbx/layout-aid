@@ -9,19 +9,19 @@ A dead-simple Vite plugin that adds visual layout aid for integrating web pages.
 npm
 
 ```bash
-npm i -D vite-plugin-devtools-columns
+npm i -D vite-plugin-layoutaid
 ```
 
 pnpm
 
 ```bash
-pnpm add -D vite-plugin-devtools-columns
+pnpm add -D vite-plugin-layoutaid
 ```
 
 yarn
 
 ```bash
-yarn add -D vite-plugin-devtools-columns
+yarn add -D vite-plugin-layoutaid
 ```
 
 In `vite.config.ts`
@@ -82,3 +82,13 @@ plugins: [
 ]
 ```
 Use `outline: false` to completely disable this feature.
+
+## Show in prod
+
+If for some reason you need the modules enabled in production build, use `prod: true`:
+
+```typescript
+layoutAid({
+    prod: true,
+})
+```
