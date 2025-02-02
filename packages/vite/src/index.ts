@@ -12,5 +12,6 @@ export default createPlugin(
     getPluginClientPath(import.meta.url),
     {
         columns: {}, // use module defaults
+        outline: {}, // use module defaults
     } as Partial<LayoutaidConfig>,
 )
