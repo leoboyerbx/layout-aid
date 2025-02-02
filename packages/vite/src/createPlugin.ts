@@ -1,27 +1,33 @@
 import type { Plugin, ResolvedConfig } from 'vite'
 import { readFile } from 'node:fs/promises'
-
-export type PluginConfig = Record<string, string | number | boolean>
+import defu from 'defu'
 
 // eslint-disable-next-line ts/consistent-type-definitions
 type CommonConfig = {
-    prod?: boolean
+    /**
+     * Whether to inject the plugin into the build. If false, you need to manually import it using `import 'virtual:layoutaid'` in your entry file.
+     * @default true
+     */
     inject?: boolean
-    // Add other common config options here
+    /**
+     * Whether to enable the plugin in production.
+     * @default false
+     */
+    prod?: boolean
 }
 
 /**
  *
  * @param pluginName
  */
-export function createPlugin<TConfig extends PluginConfig>(pluginName: string, clientPath: string, defaultConfig: TConfig) {
+export function createPlugin<TConfig>(pluginName: string, clientPath: string, defaultConfig: TConfig) {
     return function (pluginConfig: Partial<TConfig> & CommonConfig = {} as Partial<TConfig> & CommonConfig): Plugin {
         const {
             prod = false,
             inject = true,
         } = pluginConfig
 
-        const hotVirtualModuleId = `virtual:layoutaid-${pluginName}`
+        const hotVirtualModuleId = `virtual:${pluginName}`
         const hotResolvedVirtualModuleId = `\0${hotVirtualModuleId}`
         let isDev = false
         function shouldInject(): boolean {
@@ -40,7 +46,17 @@ export function createPlugin<TConfig extends PluginConfig>(pluginName: string, c
         }
 
         return {
-            name: `vite-plugin-layoutaid-${pluginName}`,
+            name: `vite-plugin-${pluginName}`,
+            config(config) {
+                const configObject = defu(pluginConfig, defaultConfig as any)
+
+                config.define = {
+                    ...config.define,
+                    __LAYOUTAID_CONFIG__: JSON.stringify(configObject),
+                }
+
+                return config
+            },
             configResolved(resolvedConfig) {
                 config = resolvedConfig
                 isDev = config.command === 'serve'
@@ -64,13 +80,7 @@ export function createPlugin<TConfig extends PluginConfig>(pluginName: string, c
                     return null
                 }
                 if (id === hotResolvedVirtualModuleId) {
-                    const code = await readFile(clientPath, 'utf-8')
-                    const configObject = Object.entries(defaultConfig).reduce((acc, [key, defaultValue]) => {
-                        acc[key] = pluginConfig[key] ?? defaultValue
-                        return acc
-                    }, {} as Record<string, any>)
-
-                    return `if (!window.layoutAidConfig) window.layoutAidConfig = {};\nwindow.layoutAidConfig["${pluginName}"] = ${JSON.stringify(configObject)};\n${code}`
+                    return await readFile(clientPath, 'utf-8')
                 }
             },
             transformIndexHtml(html) {

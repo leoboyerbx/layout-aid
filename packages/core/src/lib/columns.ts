@@ -1,13 +1,23 @@
-import type { InferConfig } from '@layoutaid/shared'
-import type plugin from '.'
-
-declare global {
-    const layoutAidConfig: {
-        columns: InferConfig<typeof plugin>
-    }
+export interface ColumnsConfig {
+    /**
+     * The number of columns to create.
+     * @default 14
+     */
+    count?: number
+    /**
+     * The color of the columns.
+     * @default a light blue 0.6 opacity
+     */
+    color?: string
+    /**
+     * Whether to persist the columns state between page loads.
+     * @default true
+     */
+    persist?: boolean
 }
 
-function setupDevtools(config: InferConfig<typeof plugin>): void {
+export function columns(config: ColumnsConfig): void {
+    const { count = 14, color = 'rgba(85, 189, 234, 0.6)', persist = false } = config
     const styleToApply = /* css */`.layoutaid-columns {
         position: fixed;
         top: 0;
@@ -18,7 +28,7 @@ function setupDevtools(config: InferConfig<typeof plugin>): void {
         z-index: 10000;
         pointer-events: none;
         display: grid;
-        grid-template-columns: repeat(${config.count}, minmax(0, 1fr));
+        grid-template-columns: repeat(${count}, minmax(0, 1fr));
         visibility: hidden;
         outline: none!important;
     }
@@ -30,8 +40,8 @@ function setupDevtools(config: InferConfig<typeof plugin>): void {
     }
     .layoutaid-columns div {
         width: 100%;
-        border-left: solid 1px ${config.color};
-        color: ${config.color};
+        border-left: solid 1px ${color};
+        color: ${color};
         outline: none;
         pointer-events: none;
         display: flex;
@@ -56,7 +66,7 @@ function setupDevtools(config: InferConfig<typeof plugin>): void {
     const debugCols = document.createElement('div')
     debugCols.classList.add('layoutaid-columns')
 
-    for (let i = 0; i < config.count; i++) {
+    for (let i = 0; i < count; i++) {
         const el = document.createElement('div')
         el.innerHTML = `<span>${i + 1}</span><span>${i + 1}</span>`
         debugCols.appendChild(el)
@@ -64,7 +74,7 @@ function setupDevtools(config: InferConfig<typeof plugin>): void {
     document.body.appendChild(debugCols)
 
     // Persist debug cols active to sessionstorage
-    if (config.persist && sessionStorage.getItem('debugColsActive') === 'true') {
+    if (persist && sessionStorage.getItem('debugColsActive') === 'true') {
         debugCols.classList.add('active')
     }
     document.addEventListener('keydown', (e) => {
@@ -81,5 +91,3 @@ function setupDevtools(config: InferConfig<typeof plugin>): void {
         '',
     )
 }
-
-setupDevtools(layoutAidConfig.columns)

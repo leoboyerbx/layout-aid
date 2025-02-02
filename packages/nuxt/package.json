@@ -1,10 +1,10 @@
 {
   "name": "my-module",
+  "type": "module",
   "version": "1.0.0",
   "description": "My new Nuxt module",
-  "repository": "your-org/my-module",
   "license": "MIT",
-  "type": "module",
+  "repository": "your-org/my-module",
   "exports": {
     ".": {
       "types": "./dist/types.d.ts",
@@ -29,9 +29,7 @@
     "test:types": "vue-tsc --noEmit && cd playground && vue-tsc --noEmit"
   },
   "dependencies": {
-    "@nuxt/kit": "^3.15.3",
-    "vite-plugin-layoutaid-columns": "workspace:^",
-    "vite-plugin-layoutaid-outline": "workspace:^"
+    "@nuxt/kit": "^3.15.3"
   },
   "devDependencies": {
     "@nuxt/devtools": "^1.7.0",
