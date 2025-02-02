@@ -1,7 +1,7 @@
 {
   "name": "@layoutaid/nuxt",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Nuxt module that adds visual layout aid for integrating web pages",
   "author": "leoboyerbx",
   "license": "MIT",
