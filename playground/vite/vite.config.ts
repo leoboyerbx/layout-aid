@@ -7,7 +7,11 @@ export default defineConfig({
     },
     plugins: [
         layoutAid({
-            prod: true,
+            columns: {
+                color: 'rgba(85, 189, 234, 0.6)',
+                count: 14,
+                persist: true,
+            },
         }),
     ],
 })
