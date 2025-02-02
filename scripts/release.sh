@@ -14,7 +14,7 @@ for PKG in packages/* ; do
   TAG="latest"
   echo "⚡ Publishing $PKG with tag $TAG"
   cp ../../LICENSE .
-  sed -i -e 's/\.\.\/\.\.\/.github\/assets/https:\/\/github.com\/leoboyerbx\/layout-aid\/tree\/main\/\.github\/assets/g' README.md
+#   sed -i -e 's/\.\.\/\.\.\/.github\/assets/https:\/\/github.com\/leoboyerbx\/layout-aid\/tree\/main\/\.github\/assets/g' README.md
   pnpm publish --access public --no-git-checks --tag $TAG
 
   popd > /dev/null

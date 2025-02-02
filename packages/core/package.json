@@ -24,8 +24,7 @@
   "scripts": {
     "build": "unbuild",
     "dev": "nodemon --watch src",
-    "stub": "unbuild --stub",
-    "postinstall": "pnpm run build"
+    "stub": "unbuild --stub"
   },
   "devDependencies": {
     "@types/node": "^22.10.10",

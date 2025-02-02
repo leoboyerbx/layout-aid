@@ -10,6 +10,8 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
+    "build": "pnpm --filter './packages/**' build",
+    "postinstall": "pnpm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
