@@ -5,8 +5,7 @@ set -e
 # Restore all git changes
 git restore -s@ -SW  -- packages
 
-# Build all once to ensure things are nice
-pnpm build
+pnpm install
 
 # Release packages
 for PKG in packages/* ; do
@@ -20,5 +19,3 @@ for PKG in packages/* ; do
 
   popd > /dev/null
 done
-
-mv README.md.bak README.md
