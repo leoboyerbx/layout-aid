@@ -5,7 +5,7 @@ set -e
 # Restore all git changes
 git restore -s@ -SW  -- packages
 
-pnpm install
+pnpm run build
 
 # Release packages
 for PKG in packages/* ; do
