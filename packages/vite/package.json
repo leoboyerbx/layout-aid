@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-layoutaid",
   "type": "module",
-  "version": "workspace:*",
+  "version": "0.0.1",
   "description": "Vite plugin that adds visual layout aid for integrating web pages",
   "author": "leoboyerbx",
   "license": "ISC",
