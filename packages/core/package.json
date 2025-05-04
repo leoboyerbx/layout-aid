@@ -5,6 +5,8 @@
   "description": "Dev tool that adds visual layout aid for integrating web pages",
   "author": "leoboyerbx",
   "license": "ISC",
+  "homepage": "https://github.com/leoboyerbx/layout-aid#readme",
+  "repository": "https://github.com/leoboyerbx/layout-aid/tree/main/packages/core",
   "keywords": [
     "layoutaid",
     "layout",
