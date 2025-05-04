@@ -4,7 +4,7 @@ A dead-simple Nuxt plugin that adds visual layout aid for integrating web pages.
 
 > During build, this module will be an empty string, making it dev-only.
 
-Try this module on [StackBlitz](https://stackblitz.com/edit/nuxt-starter-g2dehnh1?embed=1&file=app.vue) (use `ctrl/cmd` + `o` and `ctrl/cmd` + `g`).
+Try this module on [StackBlitz](https://stackblitz.com/edit/nuxt-starter-g2dehnh1?file=nuxt.config.ts) (use `ctrl/cmd` + `o` and `ctrl/cmd` + `g`).
 
 ## Installation
 
