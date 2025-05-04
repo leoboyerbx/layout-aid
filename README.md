@@ -1,4 +1,4 @@
-# Vite Plugin Layout Aid
+# Layout Aid
 
 A versatile Vite/Nuxt plugin that adds visual layout aid for integrating web pages.
 
