@@ -5,6 +5,8 @@
   "description": "Vite plugin that adds visual layout aid for integrating web pages",
   "author": "leoboyerbx",
   "license": "ISC",
+  "homepage": "https://github.com/leoboyerbx/layout-aid#readme",
+  "repository": "https://github.com/leoboyerbx/layout-aid/tree/main/packages/vite",
   "keywords": [
     "vite",
     "vite-plugin",
