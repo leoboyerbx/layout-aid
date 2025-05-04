@@ -32,3 +32,11 @@ The code is structured in monorepo.
 
 We use [pnpm changesets](https://pnpm.io/fr/using-changesets) to release versions.
 
+## Create a new release:
+
+- Init the changeset with `pnpm changeset`. Follow the prompts.
+- If needed, add details to the release in the generated md file.
+- Update the versions with `pnpm changeset version`
+- Run `pnpm install` to rebuild the lockfile.
+- Run `pnpm run release` to run the custom release script (only UNIX systems for now)
+

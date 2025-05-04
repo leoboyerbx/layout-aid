@@ -12,7 +12,8 @@
   "scripts": {
     "build": "pnpm --filter './packages/**' build",
     "postinstall": "pnpm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "bash scripts/release.sh"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.1.0",
